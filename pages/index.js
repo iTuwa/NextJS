@@ -1,14 +1,21 @@
-import Head from 'next/head';
+import Head from "next/head";
+import fs from "fs";
+import path from "path";
 
-export default function Home() {
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), "index.html");
+  const html = fs.readFileSync(filePath, "utf8");
+  return { props: { html } };
+}
+
+export default function Home({ html }) {
   return (
     <>
       <Head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Converted App</title>
+        <title>OpenSea.io</title>
+        <script src="/jquery-3.7.1.min.js"></script>
       </Head>
-      <iframe src="/index.html" style={{ width: '100%', height: '100vh', border: 0 }} title="Original App" />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
 }
