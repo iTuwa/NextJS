@@ -3,7 +3,8 @@ import fs from "fs";
 import path from "path";
 
 export async function getStaticProps() {
-  const filePath = path.join(process.cwd(), "index.html");
+  // 👇 Read from the public folder instead of project root
+  const filePath = path.join(process.cwd(), "public", "index.html");
   const html = fs.readFileSync(filePath, "utf8");
   return { props: { html } };
 }
